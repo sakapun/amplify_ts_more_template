@@ -1,13 +1,9 @@
-import React from 'react';
-import {Provider} from "./application/provider";
-import {IndexPage} from "./presentation/container/IndexPage";
+import React from "react";
+import { Provider } from "./application/provider";
+import { IndexPage } from "./presentation/container/IndexPage";
 import AdminPage from "./presentation/container/AdminPage";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import {Box} from "@chakra-ui/core/dist";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Box } from "@chakra-ui/core/dist";
 
 function App() {
   return (
@@ -30,4 +26,4 @@ function App() {
   );
 }
 
-export default (App);
+export default App;

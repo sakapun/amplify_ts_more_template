@@ -29,7 +29,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint --fix ./src/**/*.ts ./src/**/*.tsx",
-    "ggen": "amplify codegen --nodownload"
+    "ggen": "amplify codegen --nodownload",
+    "prettier": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,6 +48,19 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-router-dom": "^5.1.5",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   }
 }
