@@ -30,14 +30,4 @@ function App() {
   );
 }
 
-export const Admin = () => {
-  return (
-    <Provider>
-      <React.StrictMode>
-        <AdminPage />
-      </React.StrictMode>
-    </Provider>
-  )
-}
-
 export default (App);
