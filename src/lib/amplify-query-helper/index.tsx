@@ -116,7 +116,7 @@ export const useQuery = <ResultType extends {}, VariablesType extends {} = {}>(
 
   React.useEffect(() => {
     fetchQuery(query, variables);
-  }, [query, JSON.stringify(variables)]);
+  }, [query, variables]);
 
   return {
     loading,
@@ -253,7 +253,7 @@ export const useSubscription = <
       }
     }
     return unsubscribe;
-  }, [JSON.stringify(config)]);
+  }, [authMode, config, dispatch]);
 
   return [item];
 };
