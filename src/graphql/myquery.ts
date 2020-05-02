@@ -1,49 +1,49 @@
 import gql from "graphql-tag";
 
 export const commentFlagment = gql`
-    fragment commentFlagment on Comment {
-        id
-        content
-    }
+  fragment commentFlagment on Comment {
+    id
+    content
+  }
 `;
 
 export const postFlagment = gql`
-    fragment postFlagment on Post {
-        id
-        title
-        comments {
-            items {
-                ...commentFlagment
-            }
-        }
+  fragment postFlagment on Post {
+    id
+    title
+    comments {
+      items {
+        ...commentFlagment
+      }
     }
-    ${commentFlagment}
+  }
+  ${commentFlagment}
 `;
 
 export const ListBlog2 = gql`
   query ListBlog2 {
-      listBlogs {
+    listBlogs {
+      items {
+        id
+        name
+        posts {
           items {
-              id
-              name
-              posts {
-                  items {
-                      ...postFlagment
-                  }
-                  nextToken
-              }
+            ...postFlagment
           }
           nextToken
+        }
       }
+      nextToken
+    }
   }
   ${postFlagment}
 `;
 
 export const onUpdatePostWithFragment = gql`
-    subscription onUpdatePostWithFragment {
-        onUpdatePost {
-            ...postFlagment
-        }
+  subscription onUpdatePostWithFragment {
+    onUpdatePost {
+      ...postFlagment
     }
-    ${postFlagment}
-`
+  }
+  ${postFlagment}
+`;

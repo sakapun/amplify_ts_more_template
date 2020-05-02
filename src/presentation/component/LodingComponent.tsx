@@ -1,5 +1,5 @@
-import React from 'react'
-import { Spinner, Flex } from '@chakra-ui/core'
+import React from "react";
+import { Spinner, Flex } from "@chakra-ui/core";
 
 export const LoadingComponent = () => (
   <Flex justifyContent="center" alignItems="center" height="100%">
@@ -10,5 +10,4 @@ export const LoadingComponent = () => (
       thickness="3px"
     />
   </Flex>
-)
-
+);

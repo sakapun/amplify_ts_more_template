@@ -3,8 +3,7 @@ import { Action, defaultState, reducer, State } from "../reducer";
 
 import { ThemeProvider } from "@chakra-ui/core";
 import UiTheme from "./UiTheme";
-import {CSSReset} from "@chakra-ui/core/dist";
-
+import { CSSReset } from "@chakra-ui/core/dist";
 
 const stateContext = createContext(defaultState);
 

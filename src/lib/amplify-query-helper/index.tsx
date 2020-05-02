@@ -1,7 +1,7 @@
-import * as React from 'react';
-import {API} from 'aws-amplify';
-import {GRAPHQL_AUTH_MODE} from '@aws-amplify/api';
-import Observable from 'zen-observable-ts';
+import * as React from "react";
+import { API } from "aws-amplify";
+import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api";
+import Observable from "zen-observable-ts";
 
 export type UndefinedGQLType<T> = T | null | undefined;
 
@@ -15,7 +15,7 @@ export function notEmpty<TValue>(
 export const mutation = async <
   ResultType extends {},
   VariablesType extends {} = {}
-  >(
+>(
   query: string,
   variables?: VariablesType,
   authMode?: GRAPHQL_AUTH_MODE
@@ -24,15 +24,20 @@ export const mutation = async <
 export const mutationCog = async <
   ResultType extends {},
   VariablesType extends {} = {}
-  >(
+>(
   query: string,
   variables?: VariablesType
-) => mutation<ResultType, VariablesType>(query, variables, GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS);
+) =>
+  mutation<ResultType, VariablesType>(
+    query,
+    variables,
+    GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+  );
 
 export const gqlOp = async <
   ResultType extends {},
   VariablesType extends {} = {}
-  >(
+>(
   query: string,
   variables?: VariablesType,
   authMode?: GRAPHQL_AUTH_MODE
@@ -53,39 +58,39 @@ export interface UseQueryType<ResultType> {
 }
 
 export const QueryHandler = <DataType extends {}>({
-                                                    data,
-                                                    loading,
-                                                    error,
-                                                    children,
-                                                    refetch,
-                                                    overlay = false,
-                                                  }: {
+  data,
+  loading,
+  error,
+  children,
+  refetch,
+  overlay = false,
+}: {
   overlay?: React.ReactNode;
   data: DataType;
   refetch?: () => void;
   loading: boolean;
   error: { data: DataType; errors: any[] };
   children: ({
-               data,
-               refetch,
-             }: {
+    data,
+    refetch,
+  }: {
     data: DataType;
     refetch?: () => void;
   }) => React.ReactNode;
 }) => {
   if (error) {
-    console.log('error', JSON.stringify(error.errors));
+    console.log("error", JSON.stringify(error.errors));
   }
 
   return overlay ? (
     <React.Fragment key={JSON.stringify(data)}>
       {loading && overlay}
-  {children({ data, refetch })}
-  </React.Fragment>
-) : (
+      {children({ data, refetch })}
+    </React.Fragment>
+  ) : (
     <React.Fragment key={JSON.stringify(data)}>
       {children({ data, refetch })}
-      </React.Fragment>
+    </React.Fragment>
   );
 };
 
@@ -142,14 +147,14 @@ export interface UseQueryListType<ResultType>
 
 export type UseQueryListTypeWithoutRefetch<ResultType> = Omit<
   UseQueryListType<ResultType>,
-  'refetch'
-  >;
+  "refetch"
+>;
 
 export const useQueryList = <
   ListItemType,
   ListQueryType extends AmplifyListType<ListItemType | null>,
   ListVariablesType extends {}
-  >(
+>(
   listKey: string,
   query: string,
   variables: ListVariablesType
@@ -172,7 +177,7 @@ export const useQueryList = <
 
   React.useEffect(() => {
     const listData = data && data[listKey];
-    setList(list => {
+    setList((list) => {
       let updatedItems = list;
       if (listData) {
         const newList: ListItemType[] | null =
@@ -194,9 +199,9 @@ export const useQueryList = <
 };
 
 enum ActionType {
-  'update',
-  'create',
-  'delete',
+  "update",
+  "create",
+  "delete",
 }
 
 type Action<T> = { type: ActionType; payload: T };
@@ -210,12 +215,12 @@ type ConfigType<VariableType extends {}> = {
 export const useSubscription = <
   ItemType extends { id: string },
   VariablesType extends {} = {}
-  >({
-      config,
-      itemData,
-      dispatch,
-      authMode,
-    }: {
+>({
+  config,
+  itemData,
+  dispatch,
+  authMode,
+}: {
   config?: ConfigType<VariablesType>;
   itemData?: ItemType;
   dispatch?: ({ payload }: { payload: ItemType }) => void;
@@ -229,14 +234,16 @@ export const useSubscription = <
       const { query, key, variables } = config;
       const subscription = API.graphql({ query, variables, authMode });
       if (subscription instanceof Observable) {
-        const s = subscription as Observable<{ value: { data: { [key: string]: ItemType } }; }>
+        const s = subscription as Observable<{
+          value: { data: { [key: string]: ItemType } };
+        }>;
         const sub = s.subscribe({
           next: (payload) => {
             try {
               const {
                 value: {
                   data: { [key]: item },
-                }
+                },
               } = payload;
 
               dispatch ? dispatch({ payload: item }) : update(item);
@@ -261,11 +268,11 @@ export const useSubscription = <
 export const useCrudSubscription = <
   ListItemType extends { id: string },
   VariableType extends {} = {}
-  >({
-      listData,
-      configs,
-      authMode,
-    }: {
+>({
+  listData,
+  configs,
+  authMode,
+}: {
   listData: ListItemType[];
   configs: {
     updatedConfig?: ConfigType<VariableType>;
@@ -280,11 +287,11 @@ export const useCrudSubscription = <
   ) {
     switch (type) {
       case ActionType.update:
-        return state.map(item => (item.id === payload.id ? payload : item));
+        return state.map((item) => (item.id === payload.id ? payload : item));
       case ActionType.create:
         return [...state, payload];
       case ActionType.delete:
-        return [...state.filter(item => item.id !== payload.id)];
+        return [...state.filter((item) => item.id !== payload.id)];
       default:
         throw new Error();
     }
@@ -315,10 +322,10 @@ export const useCrudSubscription = <
 export const useCrudSubscriptionCog = <
   ListItemType extends { id: string },
   VariableType extends {} = {}
-  >({
-      listData,
-      configs,
-    }: {
+>({
+  listData,
+  configs,
+}: {
   listData: ListItemType[];
   configs: {
     updatedConfig?: ConfigType<VariableType>;
@@ -330,6 +337,6 @@ export const useCrudSubscriptionCog = <
   return useCrudSubscription<ListItemType, VariableType>({
     listData,
     configs,
-    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
   });
-}
+};
