@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Box,
   Heading
@@ -7,8 +7,6 @@ import {
 export type RightPaneType = {
 }
 const RightPane = (props: RightPaneType) => {
-  const [isEditing, setEditing] = useState<boolean>(false);
-
   return (
     <Box p={8}>
       <Heading>

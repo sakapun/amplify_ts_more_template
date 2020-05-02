@@ -1,19 +1,16 @@
-import React, {useCallback, useState} from 'react'
+import React from 'react'
 import {
   Grid,
   Box,
   List,
   ListItem,
-  Link,
-  Button
+  Link
 } from '@chakra-ui/core'
 import RightPane from "./RightPane";
 
 type IndexPageType = {
 }
-const IndexPageComponent = (props: IndexPageType) => {
-  const [postId, setPostId] = useState<string>("")
-
+const IndexPageComponent = () => {
   return(
     <Grid
       templateColumns="30% 1fr"

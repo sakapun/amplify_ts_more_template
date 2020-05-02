@@ -168,7 +168,7 @@ export const useQueryList = <
 
   React.useEffect(() => {
     setList([]);
-  }, [JSON.stringify(variables)]);
+  }, [variables]);
 
   React.useEffect(() => {
     const listData = data && data[listKey];
